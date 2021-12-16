@@ -1,0 +1,31 @@
+export enum HttpMethod {
+  GET = 'get',
+  HEAD = 'head',
+  POST = 'post',
+  PUT = 'put',
+  DELETE = 'delete',
+  CONNECT = 'connect',
+  OPTIONS = 'options',
+  TRACE = 'trace',
+  PATCH = 'patch',
+}
+
+export enum HttpCode {
+  OK = 200,
+  Created = 201,
+  Accepted = 202,
+  NoContent = 204,
+  NotModified = 304,
+  TemporaryRedirect = 307,
+  PermanentRedirect = 308,
+  BadRequest = 400,
+  Unauthorized = 401,
+  Forbidden = 403,
+  NotFount = 404,
+  MethodNotAllowed = 405,
+  RequestTimeout = 408,
+  InternalServerError = 500,
+  BadGateway = 502,
+  ServiceUnavailable = 503,
+  GatewayTimeout = 504,
+}
