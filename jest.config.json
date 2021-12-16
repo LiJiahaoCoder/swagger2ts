@@ -1,0 +1,13 @@
+{
+  "testEnvironment": "jsdom",
+  "testMatch": ["<rootDir>/tests/**/*.test.{ts,tsx}"],
+  "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json"],
+  "transform": {
+    "^.+\\.(js|ts)x?$": "ts-jest",
+    "^.+\\.(png|jpe?g|gif|svg|woff2?|eot|ttf|otf)$": "jest-transform-stub"
+  },
+  "moduleNameMapper": {
+    "@/(.*)": "<rootDir>/src/$1",
+    "^.+\\.less$": "identity-obj-proxy"
+  }
+}

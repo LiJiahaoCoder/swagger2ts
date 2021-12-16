@@ -1,0 +1,11 @@
+# Directories
+node_modules
+.vscode
+.idea
+.parcel-cache
+coverage
+dist
+lib
+
+# Files
+yarn-error.log
