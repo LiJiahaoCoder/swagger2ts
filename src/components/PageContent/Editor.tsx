@@ -21,7 +21,7 @@ const Editor = ({ type, value, title }: Props) => {
   
   return (
     <div>
-      <h3 className="display-6">{title}</h3>
+      <h3 className="display-6 fs-3">{title}</h3>
       <AceEditor
         readOnly
         width='550px'

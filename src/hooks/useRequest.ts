@@ -28,6 +28,7 @@ const useRequest = <T>() => {
     errorMessage,
     result,
     request,
+    setErrorMessage,
   };
 };
 

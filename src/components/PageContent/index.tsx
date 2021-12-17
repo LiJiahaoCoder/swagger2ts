@@ -45,7 +45,7 @@ const PageContent = ({ url, loading, schema, setUrl, fetch }: Props) => {
 
   return (
     <main className="container">
-      <div className="shadow input-group my-5 w-100">
+      <div className="shadow input-group mt-5 mb-4 w-100">
         <SearchInput
           value={url}
           loading={loading}
