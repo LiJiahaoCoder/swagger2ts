@@ -13,7 +13,8 @@ const Editor = ({ type, value }: Props) => {
   return (
     <AceEditor
       readOnly
-      style={{ width: 550, height: 600 }}
+      width='550px'
+      height='600px'
       mode={type}
       theme="xcode"
       name={type}
