@@ -1,4 +1,10 @@
-const SearchInput = () => {
+interface Props {
+  value: string;
+  onChange: (value: string) => void;
+  onFetch: () => void;
+}
+
+const SearchInput = ({ value, onChange, onFetch }: Props) => {
   return (
     <>
       <input
@@ -6,12 +12,17 @@ const SearchInput = () => {
         type="text"
         placeholder="Please input request URL of swagger.json"
         aria-label="Please input request URL of swagger.json"
-        aria-describedby="button-addon2"
+        aria-describedby="input-search"
+        value={value}
+        onChange={(e) => {
+          onChange(e.target.value);
+        }}
       />
       <button
         className="btn btn-outline-secondary"
         type="button"
-        id="button-addon2"
+        id="input-search"
+        onClick={onFetch}
       >
         Fetch
       </button>
