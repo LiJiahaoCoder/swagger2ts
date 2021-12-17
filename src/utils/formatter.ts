@@ -1,64 +1,58 @@
 const INDENT_CHARS = '    ';
 
-export const formatJSON = (jsonString: string | null) => {
-  if (!jsonString) return '';
+export const formatJSON = (json: string | null) => {
+  if (!json) return '';
 
   let i = 0,
-      result = '',
-      inString = false,
-      indentLevel = 0;
+    result = '',
+    inString = false,
+    indentLevel = 0;
 
-  for (i = 0; i < jsonString.length; ++i) {
-    const currentChar = jsonString.charAt(i);
+  for (i = 0; i < json.length; ++i) {
+    const current = json.charAt(i);
 
-    switch (currentChar) {
+    switch (current) {
       case '{':
       case '[':
+        result += current;
         if (!inString) {
-          result += currentChar + '\n' + repeat(INDENT_CHARS, indentLevel + 1);
-          indentLevel += 1;
-        } else {
-          result += currentChar;
-        }
-        break;
-      case '}':
-      case ']':
-        if (!inString) {
-          indentLevel -= 1;
-          result += '\n' + repeat(INDENT_CHARS, indentLevel) + currentChar;
-        } else {
-          result += currentChar;
+          result += changeToNextLine(++indentLevel);
         }
         break;
       case ',':
+        result += current;
         if (!inString) {
-          result += ',\n' + repeat(INDENT_CHARS, indentLevel);
-        } else {
-          result += currentChar;
+          result += changeToNextLine(indentLevel);
         }
         break;
       case ':':
+        result += current;
         if (!inString) {
-          result += ': ';
-        } else {
-          result += currentChar;
+          result += ' ';
         }
         break;
       case ' ':
       case '\n':
       case '\t':
         if (inString) {
-          result += currentChar;
+          result += current;
         }
+        break;
+      case '}':
+      case ']':
+        if (!inString) {
+          result += changeToNextLine(--indentLevel);
+        }
+        result += current;
         break;
       case '"':
-        if (i > 0 && jsonString.charAt(i - 1) !== '\\') {
+        if (i > 0 && json.charAt(i - 1) !== '\\') {
           inString = !inString;
         }
-        result += currentChar;
+        result += current;
         break;
       default:
-        result += currentChar;
+        result += current;
         break;
     }
   }
@@ -68,4 +62,8 @@ export const formatJSON = (jsonString: string | null) => {
 
 const repeat = (char: string, count: number) => {
   return new Array(count + 1).join(char);
+};
+
+const changeToNextLine = (level: number) => {
+  return '\n' + repeat(INDENT_CHARS, level);
 };
