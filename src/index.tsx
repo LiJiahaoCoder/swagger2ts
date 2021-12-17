@@ -1,6 +1,7 @@
 import { render } from 'react-dom';
+import App from './App';
 
 render(
-  <h1>Swagger2TypeScript</h1>,
+  <App />,
   document.querySelector('#app')
 );
