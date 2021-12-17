@@ -5,7 +5,7 @@ import useSchema from '@/hooks/useSchema';
 
 const App = () => {
   const [url, setUrl] = useState('');
-  const { result, request } = useSchema();
+  const { loading, errorMessage, result, request } = useSchema();
 
   const handleFetch = () => {
     request(url);
@@ -16,6 +16,7 @@ const App = () => {
       <PageHeader />
       <PageContent
         url={url}
+        loading={loading}
         schema={result}
         setUrl={setUrl}
         fetch={handleFetch}

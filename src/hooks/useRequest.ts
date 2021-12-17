@@ -3,12 +3,12 @@ import { HttpMethod } from '@/constants/common';
 
 const useRequest = <T>() => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [result, setResult] = useState<T | null>(null);
 
   const request = useCallback(async (url: string) => {
     setLoading(true);
-    setError(false);
+    setErrorMessage('');
     
     try {
       const response = await(
@@ -19,13 +19,13 @@ const useRequest = <T>() => {
       setResult(response);
     } catch (error) {
       setLoading(false);
-      setError(true);
+      setErrorMessage(String(error || 'Unexpected Error'));
     }
   }, []);
 
   return {
     loading,
-    error,
+    errorMessage,
     result,
     request,
   };

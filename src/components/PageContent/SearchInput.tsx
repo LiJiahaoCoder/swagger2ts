@@ -1,10 +1,11 @@
 interface Props {
   value: string;
+  loading: boolean;
   onChange: (value: string) => void;
   onFetch: () => void;
 }
 
-const SearchInput = ({ value, onChange, onFetch }: Props) => {
+const SearchInput = ({ value, loading, onChange, onFetch }: Props) => {
   return (
     <>
       <input
@@ -14,6 +15,7 @@ const SearchInput = ({ value, onChange, onFetch }: Props) => {
         aria-label="Please input request URL of swagger.json"
         aria-describedby="input-search"
         value={value}
+        disabled={loading}
         onChange={(e) => {
           onChange(e.target.value);
         }}
@@ -22,8 +24,15 @@ const SearchInput = ({ value, onChange, onFetch }: Props) => {
         className="btn btn-outline-secondary"
         type="button"
         id="input-search"
+        disabled={loading}
         onClick={onFetch}
       >
+        {loading && (
+          <span
+            className="spinner-border spinner-border-sm" role="status"
+            aria-hidden="true"
+          />
+        )}
         Fetch
       </button>
     </>
