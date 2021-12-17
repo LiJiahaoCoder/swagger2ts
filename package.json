@@ -2,6 +2,8 @@
   "name": "swagger2ts",
   "version": "0.0.1",
   "license": "MIT",
+  "repository": "https://github.com/LiJiahaoCoder/swagger2ts.git",
+  "author": "Jiahao Li <lijiahao_shandong@163.com>",
   "scripts": {
     "prepare": "husky install",
     "test": "jest --coverage",
