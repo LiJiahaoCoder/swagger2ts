@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ReactNode } from 'react';
 import AceEditor from 'react-ace';
 import { formatJSON } from '@/utils/format';
 
@@ -9,9 +9,10 @@ import 'ace-builds/src-noconflict/theme-xcode';
 interface Props {
   type: 'json' | 'typescript';
   value: string | null;
+  title?: ReactNode;
 }
 
-const Editor = ({ type, value }: Props) => {
+const Editor = ({ type, value, title }: Props) => {
   const [formattedValue, setFormattedValue] = useState('');
 
   useEffect(() => {
@@ -19,17 +20,20 @@ const Editor = ({ type, value }: Props) => {
   }, [value]);
   
   return (
-    <AceEditor
-      readOnly
-      width='550px'
-      height='600px'
-      className='shadow border rounded-1'
-      mode={type}
-      theme="xcode"
-      name={type}
-      value={formattedValue}
-      editorProps={{ $blockScrolling: true }}
-    />
+    <div>
+      <h3 className="display-6">{title}</h3>
+      <AceEditor
+        readOnly
+        width='550px'
+        height='600px'
+        className='shadow border rounded-1'
+        mode={type}
+        theme="xcode"
+        name={type}
+        value={formattedValue}
+        editorProps={{ $blockScrolling: true }}
+      />
+    </div>
   );
 };
 

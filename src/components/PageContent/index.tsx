@@ -35,9 +35,17 @@ const PageContent = ({ url, schema, setUrl, fetch }: Props) => {
         <SearchInput value={url} onChange={handleInput} onFetch={handleFetch} />
       </div>
       <section className="d-flex justify-content-between">
-        <Editor type="json" value={schema ? JSON.stringify(schema) : ''} />
+        <Editor
+          type="json"
+          title={<>Swagger Schema <code className='ml-2 bg-light p-1 rounded-1 fs-5'>json</code></>}
+          value={schema ? JSON.stringify(schema) : ''}
+        />
         <TransformButton />
-        <Editor type="typescript" value="" />
+        <Editor
+          type="typescript"
+          title={<>TypeScript Types <code className='ml-2 bg-light p-1 rounded-1 fs-5'>typescript</code></>}
+          value=""
+        />
       </section>
     </main>
   );
