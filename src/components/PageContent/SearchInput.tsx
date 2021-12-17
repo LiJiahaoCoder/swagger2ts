@@ -24,12 +24,12 @@ const SearchInput = ({ value, loading, onChange, onFetch }: Props) => {
         className="btn btn-outline-secondary"
         type="button"
         id="input-search"
-        disabled={loading}
+        disabled={loading || !value}
         onClick={onFetch}
       >
         {loading && (
           <span
-            className="spinner-border spinner-border-sm" role="status"
+            className="spinner-border spinner-border-sm me-1" role="status"
             aria-hidden="true"
           />
         )}

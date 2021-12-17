@@ -4,9 +4,10 @@ import Editor from './Editor';
 
 interface TransformButtonProps {
   loading: boolean;
+  disabled: boolean;
 }
 
-const TransformButton = ({ loading }: TransformButtonProps) => (
+const TransformButton = ({ loading, disabled }: TransformButtonProps) => (
   <div
     className="d-flex align-items-center
 "
@@ -14,14 +15,14 @@ const TransformButton = ({ loading }: TransformButtonProps) => (
     <button
       type="button"
       className="btn btn-secondary"
-      disabled={loading}
+      disabled={loading || disabled}
     >
       {loading ?
          <span
           className="spinner-border spinner-border-sm" role="status"
           aria-hidden="true"
         />:
-        <i className="fas fa-hand-point-right fs-4" />}
+        <i className="fas fa-arrow-right mt-1" />}
     </button>
   </div>
 );
@@ -56,13 +57,13 @@ const PageContent = ({ url, loading, schema, setUrl, fetch }: Props) => {
       <section className="d-flex justify-content-between">
         <Editor
           type="json"
-          title={<>Swagger Schema <code className='ml-2 bg-light p-1 rounded-1 fs-5'>json</code></>}
+          title={<>Swagger Schema <code className='ms-2 bg-light p-1 rounded-1 fs-5'>json</code></>}
           value={schema ? JSON.stringify(schema) : ''}
         />
-        <TransformButton loading={loading} />
+        <TransformButton loading={false} disabled={!schema} />
         <Editor
           type="typescript"
-          title={<>TypeScript Types <code className='ml-2 bg-light p-1 rounded-1 fs-5'>typescript</code></>}
+          title={<>TypeScript Types <code className='ms-2 bg-light p-1 rounded-1 fs-5'>typescript</code></>}
           value=""
         />
       </section>
