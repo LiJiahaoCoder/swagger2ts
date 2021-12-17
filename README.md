@@ -1,0 +1,1 @@
+# Swagger to TypeScript
