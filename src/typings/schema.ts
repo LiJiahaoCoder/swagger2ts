@@ -1,4 +1,4 @@
-import { HttpMethod, HttpCode } from '@/constants/common'
+import { HttpMethod, HttpCode } from '@/constants/common';
 import { type DataType } from './common';
 
 export interface Schema {
