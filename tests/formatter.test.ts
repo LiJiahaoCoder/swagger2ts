@@ -1,4 +1,4 @@
-import { formatJSON } from '../src/utils/format';
+import { formatJSON } from '../src/utils/formatter';
 
 const DEFINITIONS = {
   data: 'data',
@@ -6,7 +6,7 @@ const DEFINITIONS = {
   type: 'object',
 };
 
-describe('Format test', () => {
+describe('Formatter test', () => {
   test('Should get empty string When call formatJSON Given empty string', () => {
     expect(formatJSON('')).toBe('');
   });

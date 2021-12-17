@@ -1,6 +1,6 @@
 import { useState, useEffect, ReactNode } from 'react';
 import AceEditor from 'react-ace';
-import { formatJSON } from '@/utils/format';
+import { formatJSON } from '@/utils/formatter';
 
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/mode-typescript';
