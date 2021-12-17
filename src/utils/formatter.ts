@@ -4,13 +4,12 @@ export const formatJSON = (jsonString: string | null) => {
   if (!jsonString) return '';
 
   let i = 0,
-    result = '',
-    indentLevel = 0,
-    inString = false,
-    currentChar = null;
+      result = '',
+      inString = false,
+      indentLevel = 0;
 
-  for (i = 0; i < jsonString.length; i += 1) {
-    currentChar = jsonString.charAt(i);
+  for (i = 0; i < jsonString.length; ++i) {
+    const currentChar = jsonString.charAt(i);
 
     switch (currentChar) {
       case '{':
