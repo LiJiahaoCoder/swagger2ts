@@ -24,7 +24,7 @@ const SearchInput = ({ value, loading, onChange, onFetch }: Props) => {
         className="btn btn-outline-secondary"
         type="button"
         id="input-search"
-        disabled={loading || !value}
+        disabled={loading || !value.trim()}
         onClick={onFetch}
       >
         {loading && (
