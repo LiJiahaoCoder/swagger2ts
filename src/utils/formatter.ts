@@ -1,9 +1,9 @@
 const INDENT_CHARS = '    ';
 
-export const formatJSON = (json: string | null) => {
+export function formatJSON(json: string | null) {
   if (!json) return '';
 
-  let i = 0,
+  let i: number,
     result = '',
     inString = false,
     indentLevel = 0;
@@ -14,19 +14,19 @@ export const formatJSON = (json: string | null) => {
     switch (current) {
       case '{':
       case '[':
-        result += current;
+        result = appendChar(result, current);
         if (!inString) {
           result += changeToNextLine(++indentLevel);
         }
         break;
       case ',':
-        result += current;
+        result = appendChar(result, current);
         if (!inString) {
           result += changeToNextLine(indentLevel);
         }
         break;
       case ':':
-        result += current;
+        result = appendChar(result, current);
         if (!inString) {
           result += ' ';
         }
@@ -35,7 +35,7 @@ export const formatJSON = (json: string | null) => {
       case '\n':
       case '\t':
         if (inString) {
-          result += current;
+          result = appendChar(result, current);
         }
         break;
       case '}':
@@ -43,27 +43,31 @@ export const formatJSON = (json: string | null) => {
         if (!inString) {
           result += changeToNextLine(--indentLevel);
         }
-        result += current;
+        result = appendChar(result, current);
         break;
       case '"':
         if (i > 0 && json.charAt(i - 1) !== '\\') {
           inString = !inString;
         }
-        result += current;
+        result = appendChar(result, current);
         break;
       default:
-        result += current;
+        result = appendChar(result, current);
         break;
     }
   }
 
   return result;
-};
+}
 
-const repeat = (char: string, count: number) => {
+function repeat(char: string, count: number) {
   return new Array(count + 1).join(char);
-};
+}
 
-const changeToNextLine = (level: number) => {
+function changeToNextLine(level: number) {
   return '\n' + repeat(INDENT_CHARS, level);
-};
+}
+
+function appendChar(result: string, current: string) {
+  return result + current;
+}
