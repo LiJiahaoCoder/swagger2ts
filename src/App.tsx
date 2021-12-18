@@ -6,8 +6,13 @@ import useSchema from '@/hooks/useSchema';
 
 const App = () => {
   const [url, setUrl] = useState('');
-  const { loading, errorMessage, result, request, setErrorMessage } =
-    useSchema();
+  const {
+    loading,
+    errorMessage,
+    result,
+    request,
+    setErrorMessage,
+  } = useSchema();
 
   const handleFetch = () => {
     request(url);

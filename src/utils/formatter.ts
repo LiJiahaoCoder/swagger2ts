@@ -1,14 +1,13 @@
 const INDENT_CHARS = '    ';
 
-export function formatJSON(json: string | null) {
+export function formatJSON(json: string) {
   if (!json) return '';
 
-  let i: number,
-    result = '',
+  let result = '',
     inString = false,
     indentLevel = 0;
 
-  for (i = 0; i < json.length; ++i) {
+  for (let i = 0; i < json.length; ++i) {
     const current = json.charAt(i);
 
     switch (current) {

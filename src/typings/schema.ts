@@ -4,7 +4,7 @@ import { type DataType } from './common';
 export interface Schema {
   definitions?: Definitions;
   basePath: string;
-  path: Paths;
+  paths: Paths;
 }
 
 interface Definitions {
