@@ -15,7 +15,7 @@ const App = () => {
   } = useSchema();
 
   const handleFetch = () => {
-    request(url);
+    request(url.trim());
   };
 
   return (

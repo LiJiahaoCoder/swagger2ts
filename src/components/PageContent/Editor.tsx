@@ -1,6 +1,7 @@
 import { useState, useEffect, ReactNode } from 'react';
 import AceEditor from 'react-ace';
 import { formatJSON } from '@/utils/formatter';
+import { copy } from '@/utils/clipboard';
 
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/mode-typescript';
@@ -22,13 +23,24 @@ const formatters: Record<'json' | 'typescript', (content: string) => string> = {
 const Editor = ({ type, value, title }: Props) => {
   const [formattedValue, setFormattedValue] = useState('');
 
+  const handleCopy = () => {
+    if (!formattedValue) return;
+
+    void copy(formattedValue);
+  };
+
   useEffect(() => {
     setFormattedValue(formatters[type](value));
   }, [value]);
 
   return (
     <div>
-      <h3 className="display-6 fs-3">{title}</h3>
+      <div className="d-flex justify-content-between align-items-center">
+        <h3 className="display-6 fs-3">{title}</h3>
+        <a href="void: 0" onClick={handleCopy}>
+          <i className="far fa-copy fs-5 text-secondary" />
+        </a>
+      </div>
       <AceEditor
         readOnly
         width="550px"
