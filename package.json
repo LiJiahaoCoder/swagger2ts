@@ -14,6 +14,7 @@
   "alias": {
     "@/*": "./src/$1"
   },
+  "browserslist": "> 0.5%, last 2 versions, not dead",
   "devDependencies": {
     "@types/jest": "^27.0.3",
     "@types/react": "^17.0.37",
