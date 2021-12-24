@@ -1,5 +1,5 @@
 import { HttpMethod, HttpCode } from '@/constants/common';
-import { type DataType } from './common';
+import { type SchemaDataType } from './common';
 
 export interface Schema {
   definitions?: Definitions;
@@ -21,7 +21,7 @@ interface Properties {
 
 interface Property {
   $ref?: string;
-  type?: DataType;
+  type?: SchemaDataType;
   nullable?: boolean;
   example?: string;
   description?: string;

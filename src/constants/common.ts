@@ -10,6 +10,18 @@ export enum HttpMethod {
   PATCH = 'patch',
 }
 
+export const HTTP_METHOD_MAP: Record<HttpMethod, string> = {
+  [HttpMethod.GET]: 'GET',
+  [HttpMethod.HEAD]: 'HEAD',
+  [HttpMethod.POST]: 'POST',
+  [HttpMethod.PUT]: 'PUT',
+  [HttpMethod.DELETE]: 'DELETE',
+  [HttpMethod.CONNECT]: 'CONNECT',
+  [HttpMethod.OPTIONS]: 'OPTIONS',
+  [HttpMethod.TRACE]: 'TRACE',
+  [HttpMethod.PATCH]: 'PATCH',
+};
+
 export enum HttpCode {
   OK = 200,
   Created = 201,
@@ -28,4 +40,13 @@ export enum HttpCode {
   BadGateway = 502,
   ServiceUnavailable = 503,
   GatewayTimeout = 504,
+}
+
+export enum SchemaDataSchema {
+  string = 'string',
+  number = 'number',
+  integer = 'integer',
+  boolean = 'boolean',
+  array = 'array',
+  object = 'object',
 }

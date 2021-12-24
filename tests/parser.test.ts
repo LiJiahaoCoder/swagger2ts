@@ -19,4 +19,35 @@ describe('Parser test', () => {
 
     expect(parse({ ...SCHEMA })).toBe(expected);
   });
+
+  test('Should get Http Method comment When call parse Given only baseUrl, path and http method in schema', () => {
+    const schema: Schema = {
+      ...SCHEMA,
+      paths: {
+        '/orders': {
+          get: {
+            responses: {},
+          },
+          post: {
+            responses: {},
+          },
+          delete: {
+            responses: {},
+          },
+          patch: {
+            responses: {},
+          },
+          put: {
+            responses: {},
+          },
+          options: {
+            responses: {},
+          },
+        },
+      },
+    };
+    const expected = `// Response\n\n// URI: /api/orders\n// GET\n// POST\n// DELETE\n// PATCH\n// PUT\n// OPTIONS\n`;
+
+    expect(parse(schema)).toBe(expected);
+  });
 });

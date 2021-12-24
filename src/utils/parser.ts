@@ -1,6 +1,5 @@
 import { Schema } from '@/typings/schema';
-
-const COMMENT_PREFIX = '// URI:';
+import { HttpMethod, HTTP_METHOD_MAP } from '@/constants/common';
 
 export function parse({ basePath, paths: pathDefinitions }: Schema) {
   const paths = Object.keys(pathDefinitions);
@@ -10,13 +9,21 @@ export function parse({ basePath, paths: pathDefinitions }: Schema) {
   let responseResult = '// Response\n\n';
 
   for (let i = 0; i < paths.length; ++i) {
-    const p = basePath + paths[i];
-    responseResult += generateComment(p);
+    const path = basePath + paths[i];
+    const methodDefinitions = pathDefinitions[paths[i]];
+    responseResult += generatePathComment(path);
+    for (const method in methodDefinitions) {
+      responseResult += generateMethodComment(method as HttpMethod);
+    }
   }
 
   return responseResult + requestResult;
 }
 
-function generateComment(content: string) {
-  return `${COMMENT_PREFIX} ${content}\n`;
+function generatePathComment(uri: string) {
+  return `// URI: ${uri}\n`;
+}
+
+function generateMethodComment(method: HttpMethod) {
+  return `// ${HTTP_METHOD_MAP[method]}\n`;
 }
