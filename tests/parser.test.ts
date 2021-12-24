@@ -1,5 +1,6 @@
 import { parse } from '@/utils/parser';
 import { Schema } from '@/typings/schema';
+import { HttpCode } from '@/constants/common';
 
 const SCHEMA: Schema = {
   basePath: '/api',
@@ -20,7 +21,7 @@ describe('Parser test', () => {
     expect(parse({ ...SCHEMA })).toBe(expected);
   });
 
-  test('Should get Http Method comment When call parse Given only baseUrl, path and http method in schema', () => {
+  test('Should get http method comment When call parse Given only baseUrl, path and http method in schema', () => {
     const schema: Schema = {
       ...SCHEMA,
       paths: {
@@ -47,6 +48,36 @@ describe('Parser test', () => {
       },
     };
     const expected = `// Response\n\n// URI: /api/orders\n// GET\n// POST\n// DELETE\n// PATCH\n// PUT\n// OPTIONS\n`;
+
+    expect(parse(schema)).toBe(expected);
+  });
+
+  test('Should get http code comment When call parse Given only baseUrl, path, http method and http code in schema', () => {
+    const schema: Schema = {
+      ...SCHEMA,
+      paths: {
+        '/orders': {
+          get: {
+            responses: {
+              [HttpCode.OK]: {
+                schema: {},
+              },
+              [HttpCode.NotFount]: {
+                schema: {},
+              },
+            },
+          },
+          post: {
+            responses: {
+              [HttpCode.Unauthorized]: {
+                schema: {},
+              },
+            },
+          },
+        },
+      },
+    };
+    const expected = `// Response\n\n// URI: /api/orders\n// GET\n// 200\n// 404\n// POST\n// 401\n`;
 
     expect(parse(schema)).toBe(expected);
   });

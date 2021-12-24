@@ -31,18 +31,18 @@ interface Paths {
   [uri: string]: Path;
 }
 
-type Path = Partial<{
-  [httpMethod in HttpMethod]: {
+type Path = {
+  [httpMethod in HttpMethod]?: {
     description?: string;
     // TODO: parse request parameters to typescript type
     parameters?: string[];
     responses: Responses;
   };
-}>;
+};
 
-type Responses = Partial<{
-  [httpCode in HttpCode]: Response;
-}>;
+type Responses = {
+  [httpCode in HttpCode]?: Response;
+};
 
 interface Response {
   description?: string;

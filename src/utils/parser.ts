@@ -1,5 +1,5 @@
 import { Schema } from '@/typings/schema';
-import { HttpMethod, HTTP_METHOD_MAP } from '@/constants/common';
+import { HttpCode, HttpMethod, HTTP_METHOD_MAP } from '@/constants/common';
 
 export function parse({ basePath, paths: pathDefinitions }: Schema) {
   const paths = Object.keys(pathDefinitions);
@@ -12,8 +12,16 @@ export function parse({ basePath, paths: pathDefinitions }: Schema) {
     const path = basePath + paths[i];
     const methodDefinitions = pathDefinitions[paths[i]];
     responseResult += generatePathComment(path);
+
     for (const method in methodDefinitions) {
+      const methodDefinition = methodDefinitions[method as HttpMethod]!;
+
       responseResult += generateMethodComment(method as HttpMethod);
+
+      const { responses } = methodDefinition;
+      for (const httpCode in responses) {
+        responseResult += generateCodeComment(httpCode as HttpCode);
+      }
     }
   }
 
@@ -26,4 +34,8 @@ function generatePathComment(uri: string) {
 
 function generateMethodComment(method: HttpMethod) {
   return `// ${HTTP_METHOD_MAP[method]}\n`;
+}
+
+function generateCodeComment(code: HttpCode) {
+  return `// ${code}\n`;
 }
