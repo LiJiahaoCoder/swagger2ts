@@ -41,12 +41,3 @@ export enum HttpCode {
   ServiceUnavailable = '503',
   GatewayTimeout = '504',
 }
-
-export enum SchemaDataEnum {
-  string = 'string',
-  number = 'number',
-  integer = 'integer',
-  boolean = 'boolean',
-  array = 'array',
-  object = 'object',
-}

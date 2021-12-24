@@ -1,6 +1,7 @@
 import { parse } from '@/utils/parser';
 import { Schema } from '@/typings/schema';
 import { HttpCode } from '@/constants/common';
+import { SchemaDataEnum } from '@/constants/schema';
 
 const SCHEMA: Schema = {
   basePath: '/api',
@@ -27,21 +28,27 @@ describe('Parser test', () => {
       paths: {
         '/orders': {
           get: {
+            operationId: 'getOrders',
             responses: {},
           },
           post: {
+            operationId: 'postOrders',
             responses: {},
           },
           delete: {
+            operationId: 'deleteOrders',
             responses: {},
           },
           patch: {
+            operationId: 'patchOrders',
             responses: {},
           },
           put: {
+            operationId: 'putOrders',
             responses: {},
           },
           options: {
+            operationId: 'optionsOrders',
             responses: {},
           },
         },
@@ -58,6 +65,7 @@ describe('Parser test', () => {
       paths: {
         '/orders': {
           get: {
+            operationId: 'getOrders',
             responses: {
               [HttpCode.OK]: {
                 schema: {},
@@ -68,6 +76,7 @@ describe('Parser test', () => {
             },
           },
           post: {
+            operationId: 'postOrders',
             responses: {
               [HttpCode.Unauthorized]: {
                 schema: {},
@@ -78,6 +87,74 @@ describe('Parser test', () => {
       },
     };
     const expected = `// Response\n\n// URI: /api/orders\n// GET\n// 200\n// 404\n// POST\n// 401\n`;
+
+    expect(parse(schema)).toBe(expected);
+  });
+
+  test('Should get correct basic type When call parse Given string, integer, number, boolean, array, object definition in definitions', () => {
+    const schema: Schema = {
+      ...SCHEMA,
+      paths: {
+        '/orders': {
+          get: {
+            operationId: 'getOrders',
+            responses: {
+              [HttpCode.OK]: {
+                schema: {
+                  type: SchemaDataEnum.string,
+                },
+              },
+              [HttpCode.NotFount]: {
+                schema: {
+                  type: SchemaDataEnum.boolean,
+                },
+              },
+            },
+          },
+          post: {
+            operationId: 'postOrders',
+            responses: {
+              [HttpCode.OK]: {
+                schema: {
+                  type: SchemaDataEnum.integer,
+                },
+              },
+            },
+          },
+          delete: {
+            operationId: 'deleteOrders',
+            responses: {
+              [HttpCode.OK]: {
+                schema: {
+                  type: SchemaDataEnum.number,
+                },
+              },
+            },
+          },
+          patch: {
+            operationId: 'patchOrders',
+            responses: {
+              [HttpCode.OK]: {
+                schema: {
+                  type: SchemaDataEnum.array,
+                },
+              },
+            },
+          },
+          options: {
+            operationId: 'optionsOrders',
+            responses: {
+              [HttpCode.OK]: {
+                schema: {
+                  type: SchemaDataEnum.object,
+                },
+              },
+            },
+          },
+        },
+      },
+    };
+    const expected = `// Response\n\n// URI: /api/orders\n// GET\n// 200\ntype GetOrders200 = string;\n\n// 404\ntype GetOrders404 = boolean;\n\n// POST\n// 200\ntype PostOrders200 = number;\n\n// DELETE\n// 200\ntype DeleteOrders200 = number;\n\n// PATCH\n// 200\ntype PatchOrders200 = any[];\n\n// OPTIONS\n// 200\ntype OptionsOrders200 = Record<string, any>;\n\n`;
 
     expect(parse(schema)).toBe(expected);
   });

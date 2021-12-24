@@ -1,12 +1,20 @@
-import { Schema } from '@/typings/schema';
-import { HttpCode, HttpMethod, HTTP_METHOD_MAP } from '@/constants/common';
+import { Schema, SchemaDataType } from '@/typings/schema';
+import { HttpCode, HttpMethod } from '@/constants/common';
+import { SCHEMA_DATA_MAP } from '@/constants/schema';
+import {
+  RESPONSE_COMMENT,
+  generateCodeComment,
+  generateMethodComment,
+  generatePathComment,
+} from './comment';
+import { transferToBigCamelCase } from './';
 
 export function parse({ basePath, paths: pathDefinitions }: Schema) {
   const paths = Object.keys(pathDefinitions);
   if (!basePath && !paths.length) return '';
 
   let requestResult = '';
-  let responseResult = '// Response\n\n';
+  let responseResult = RESPONSE_COMMENT;
 
   for (let i = 0; i < paths.length; ++i) {
     const path = basePath + paths[i];
@@ -18,9 +26,18 @@ export function parse({ basePath, paths: pathDefinitions }: Schema) {
 
       responseResult += generateMethodComment(method as HttpMethod);
 
-      const { responses } = methodDefinition;
+      const { responses, operationId } = methodDefinition;
       for (const httpCode in responses) {
         responseResult += generateCodeComment(httpCode as HttpCode);
+
+        const {
+          schema: { type },
+        } = responses[httpCode as HttpCode]!;
+        responseResult += generateTsCode(
+          operationId,
+          httpCode as HttpCode,
+          type
+        );
       }
     }
   }
@@ -28,14 +45,14 @@ export function parse({ basePath, paths: pathDefinitions }: Schema) {
   return responseResult + requestResult;
 }
 
-function generatePathComment(uri: string) {
-  return `// URI: ${uri}\n`;
-}
+function generateTsCode(
+  operationId: string,
+  code: HttpCode,
+  type?: SchemaDataType
+) {
+  if (!type) return '';
 
-function generateMethodComment(method: HttpMethod) {
-  return `// ${HTTP_METHOD_MAP[method]}\n`;
-}
-
-function generateCodeComment(code: HttpCode) {
-  return `// ${code}\n`;
+  return `type ${transferToBigCamelCase(operationId)}${code} = ${
+    SCHEMA_DATA_MAP[type]
+  };\n\n`;
 }
