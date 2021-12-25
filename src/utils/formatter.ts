@@ -18,6 +18,13 @@ export function formatJSON(json: string) {
           result += changeToNextLine(++indentLevel);
         }
         break;
+      case '}':
+      case ']':
+        if (!inString) {
+          result += changeToNextLine(--indentLevel);
+        }
+        result = appendChar(result, current);
+        break;
       case ',':
         result = appendChar(result, current);
         if (!inString) {
@@ -36,13 +43,6 @@ export function formatJSON(json: string) {
         if (inString) {
           result = appendChar(result, current);
         }
-        break;
-      case '}':
-      case ']':
-        if (!inString) {
-          result += changeToNextLine(--indentLevel);
-        }
-        result = appendChar(result, current);
         break;
       case '"':
         if (i > 0 && json.charAt(i - 1) !== '\\') {
