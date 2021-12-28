@@ -154,7 +154,7 @@ describe('Parser test', () => {
         },
       },
     };
-    const expected = `// Response\n\n// URI: /api/orders\n// GET\n// 200\ntype GetOrders200=string;\n\n// 404\ntype GetOrders404=boolean;\n\n// POST\n// 200\ntype PostOrders200=number;\n\n// DELETE\n// 200\ntype DeleteOrders200=number;\n\n// PATCH\n// 200\ntype PatchOrders200=any[];\n\n// OPTIONS\n// 200\ntype OptionsOrders200=Record<string,any>;\n\n`;
+    const expected = `// Response\n\n// URI: /api/orders\n// GET\n// 200\ntype GetOrders200 = string;\n\n// 404\ntype GetOrders404 = boolean;\n\n// POST\n// 200\ntype PostOrders200 = number;\n\n// DELETE\n// 200\ntype DeleteOrders200 = number;\n\n// PATCH\n// 200\ntype PatchOrders200 = any[];\n\n// OPTIONS\n// 200\ntype OptionsOrders200 = Record<string, any>;\n\n`;
 
     expect(parse(schema)).toBe(expected);
   });
@@ -188,7 +188,7 @@ describe('Parser test', () => {
         CliOption: { type: 'boolean' },
       },
     };
-    const expected = `// Definitions\n\ninterface ResponseCode{code:number;link:string;}\n\ninterface GeneratorInput{spec:Record<string,any>;options:any[];swaggerUrl:string;}\n\ntype UrlMatcher=string;\n\ntype CliOption=boolean;\n\n// Response\n\n// URI: /api/orders\n// URI: /api/orders/{id}\n`;
+    const expected = `// Definitions\n\ninterface ResponseCode {\n  code: number;\n  link: string;\n}\n\ninterface GeneratorInput {\n  spec: Record<string, any>;\n  options: any[];\n  swaggerUrl: string;\n}\n\ntype UrlMatcher = string;\n\ntype CliOption = boolean;\n\n// Response\n\n// URI: /api/orders\n// URI: /api/orders/{id}\n`;
 
     expect(parse(schema)).toBe(expected);
   });
@@ -218,7 +218,7 @@ describe('Parser test', () => {
         CliOption: { type: 'boolean' },
       },
     };
-    const expected = `// Definitions\n\ninterface ResponseCode{code:number;link:string;}\n\ninterface GeneratorInput{spec:Record<string,any>;}\n\ntype UrlMatcher=string;\n\ntype CliOption=boolean;\n\n// Response\n\n// URI: /api/orders\n// URI: /api/orders/{id}\n`;
+    const expected = `// Definitions\n\ninterface ResponseCode {\n  code: number;\n  link: string;\n}\n\ninterface GeneratorInput {\n  spec: Record<string, any>;\n}\n\ntype UrlMatcher = string;\n\ntype CliOption = boolean;\n\n// Response\n\n// URI: /api/orders\n// URI: /api/orders/{id}\n`;
 
     expect(parse(schema)).toBe(expected);
   });

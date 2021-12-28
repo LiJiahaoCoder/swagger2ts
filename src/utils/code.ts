@@ -11,7 +11,7 @@ export function generateTypeCode(
 ) {
   if (!type) return '';
 
-  return `type ${transferToBigCamelCase(operationId)}${code ?? ''}=${
+  return `type ${transferToBigCamelCase(operationId)}${code ?? ''} = ${
     SCHEMA_DATA_MAP[type]
   };\n\n`;
 }
@@ -33,12 +33,12 @@ export function generateDefinitionsCode(definitions?: Definitions) {
 }
 
 function generateInterfaceCode(name: string, properties: Properties) {
-  let result = `interface ${name}{`;
+  let result = `interface ${name} {\n`;
 
   for (const propertyName in properties) {
     const { type } = properties[propertyName];
     if (!type) continue;
-    result += `${propertyName}:${SCHEMA_DATA_MAP[type]};`
+    result += `  ${propertyName}: ${SCHEMA_DATA_MAP[type]};\n`
   }
   result += '}\n\n';
 
