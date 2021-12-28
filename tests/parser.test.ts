@@ -154,7 +154,7 @@ describe('Parser test', () => {
         },
       },
     };
-    const expected = `// Response\n\n// URI: /api/orders\n// GET\n// 200\ntype GetOrders200 = string;\n\n// 404\ntype GetOrders404 = boolean;\n\n// POST\n// 200\ntype PostOrders200 = number;\n\n// DELETE\n// 200\ntype DeleteOrders200 = number;\n\n// PATCH\n// 200\ntype PatchOrders200 = any[];\n\n// OPTIONS\n// 200\ntype OptionsOrders200 = Record<string, any>;\n\n`;
+    const expected = `// Response\n\n// URI: /api/orders\n// GET\n// 200\ntype GetOrders200=string;\n\n// 404\ntype GetOrders404=boolean;\n\n// POST\n// 200\ntype PostOrders200=number;\n\n// DELETE\n// 200\ntype DeleteOrders200=number;\n\n// PATCH\n// 200\ntype PatchOrders200=any[];\n\n// OPTIONS\n// 200\ntype OptionsOrders200=Record<string, any>;\n\n`;
 
     expect(parse(schema)).toBe(expected);
   });

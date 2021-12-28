@@ -1,13 +1,12 @@
-import { Schema, SchemaDataType } from '@/typings/schema';
+import { Schema } from '@/typings/schema';
 import { HttpCode, HttpMethod } from '@/constants/common';
-import { SCHEMA_DATA_MAP } from '@/constants/schema';
 import {
   RESPONSE_COMMENT,
   generateCodeComment,
   generateMethodComment,
   generatePathComment,
 } from './comment';
-import { transferToBigCamelCase } from './';
+import { generateTypeCode } from './code';
 
 export function parse({ basePath, paths: pathDefinitions }: Schema) {
   const paths = Object.keys(pathDefinitions);
@@ -33,7 +32,7 @@ export function parse({ basePath, paths: pathDefinitions }: Schema) {
         const {
           schema: { type },
         } = responses[httpCode as HttpCode]!;
-        responseResult += generateTsCode(
+        responseResult += generateTypeCode(
           operationId,
           httpCode as HttpCode,
           type
@@ -43,16 +42,4 @@ export function parse({ basePath, paths: pathDefinitions }: Schema) {
   }
 
   return responseResult + requestResult;
-}
-
-function generateTsCode(
-  operationId: string,
-  code: HttpCode,
-  type?: SchemaDataType
-) {
-  if (!type) return '';
-
-  return `type ${transferToBigCamelCase(operationId)}${code} = ${
-    SCHEMA_DATA_MAP[type]
-  };\n\n`;
 }
