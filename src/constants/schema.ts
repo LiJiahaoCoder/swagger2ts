@@ -1,3 +1,5 @@
+import { SchemaDataType } from '@/typings/schema';
+
 export enum SchemaDataEnum {
   string = 'string',
   number = 'number',
@@ -13,5 +15,7 @@ export const SCHEMA_DATA_MAP: Record<SchemaDataEnum, string> = {
   [SchemaDataEnum.integer]: 'number',
   [SchemaDataEnum.boolean]: 'boolean',
   [SchemaDataEnum.array]: 'any[]',
-  [SchemaDataEnum.object]: 'Record<string, any>',
+  [SchemaDataEnum.object]: 'Record<string,any>',
 };
+
+export const GENERIC_TYPES: SchemaDataType[] = ['string', 'number', 'integer', 'boolean'];

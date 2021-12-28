@@ -20,7 +20,7 @@ export interface Schema {
   paths: Paths;
 }
 
-interface Definitions {
+export interface Definitions {
   [definition: string]: Definition;
 }
 
@@ -28,7 +28,7 @@ interface Definition extends Property {
   properties?: Properties;
 }
 
-interface Properties {
+export interface Properties {
   [property: string]: Property;
 }
 

@@ -2,20 +2,23 @@ import { Schema } from '@/typings/schema';
 import { HttpCode, HttpMethod } from '@/constants/common';
 import {
   RESPONSE_COMMENT,
-  generateCodeComment,
-  generateMethodComment,
+  generateHttpCodeComment,
+  generateHttpMethodComment,
   generatePathComment,
 } from './comment';
-import { generateTypeCode } from './code';
+import { generateTypeCode, generateDefinitionsCode } from './code';
 
-export function parse({ basePath, paths: pathDefinitions }: Schema) {
+export function parse({ basePath, paths: pathDefinitions, definitions }: Schema) {
   const paths = Object.keys(pathDefinitions);
   if (!basePath && !paths.length) return '';
 
   let requestResult = '';
-  let responseResult = RESPONSE_COMMENT;
+  let responseResult = '';
 
-  for (let i = 0; i < paths.length; ++i) {
+  responseResult += generateDefinitionsCode(definitions);
+
+  responseResult += RESPONSE_COMMENT;
+  for (let i = 0; i < paths.length; ++ i) {
     const path = basePath + paths[i];
     const methodDefinitions = pathDefinitions[paths[i]];
     responseResult += generatePathComment(path);
@@ -23,19 +26,19 @@ export function parse({ basePath, paths: pathDefinitions }: Schema) {
     for (const method in methodDefinitions) {
       const methodDefinition = methodDefinitions[method as HttpMethod]!;
 
-      responseResult += generateMethodComment(method as HttpMethod);
+      responseResult += generateHttpMethodComment(method as HttpMethod);
 
       const { responses, operationId } = methodDefinition;
       for (const httpCode in responses) {
-        responseResult += generateCodeComment(httpCode as HttpCode);
+        responseResult += generateHttpCodeComment(httpCode as HttpCode);
 
         const {
           schema: { type },
         } = responses[httpCode as HttpCode]!;
         responseResult += generateTypeCode(
           operationId,
-          httpCode as HttpCode,
-          type
+          type,
+          httpCode as HttpCode
         );
       }
     }
