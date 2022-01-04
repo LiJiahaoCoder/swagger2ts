@@ -6,14 +6,20 @@ import { transferToBigCamelCase } from './';
 
 export function generateTypeCode(
   operationId: string,
-  type?: SchemaDataType,
+  type?: string,
   code?: HttpCode
 ) {
   if (!type) return '';
 
-  return `type ${transferToBigCamelCase(operationId)}${code ?? ''} = ${
-    SCHEMA_DATA_MAP[type]
-  };\n\n`;
+  return `type ${transferToBigCamelCase(operationId)}${code ?? ''} = ${type};\n\n`;
+}
+
+export function generateBasicTypeCode(
+  operationId: string,
+  type?: SchemaDataType,
+  code?: HttpCode
+) {
+  return generateTypeCode(operationId, type ? SCHEMA_DATA_MAP[type] : '', code);
 }
 
 export function generateDefinitionsCode(definitions?: Definitions) {
@@ -23,7 +29,7 @@ export function generateDefinitionsCode(definitions?: Definitions) {
   for (const interfaceName in definitions) {
     const { type, properties } = definitions[interfaceName];
     if (!properties) {
-      result += generateTypeCode(interfaceName, type);
+      result += generateBasicTypeCode(interfaceName, type);
     } else {
       result += generateInterfaceCode(interfaceName, properties);
     }

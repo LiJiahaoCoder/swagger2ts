@@ -222,4 +222,36 @@ describe('Parser test', () => {
 
     expect(parse(schema)).toBe(expected);
   });
+
+  test('Should get correct definitions type When call parse Given $ref in path\'s schema', () => {
+    const schema: Schema = {
+      ...SCHEMA,
+      paths: {
+        '/orders': {
+          get: {
+            operationId: 'getOrders',
+            responses: {
+              [HttpCode.OK]: {
+                schema: {
+                  $ref: '#/definitions/ResponseCode'
+                },
+              },
+            },
+          },
+        },
+      },
+      definitions: {
+        ResponseCode: {
+          type: 'object',
+          properties: {
+            code: { type: 'number' },
+            link: { type: 'string' },
+          },
+        },
+      },
+    };
+    const expected = `// Definitions\n\ninterface ResponseCode {\n  code: number;\n  link: string;\n}\n\n// Response\n\n// URI: /api/orders\n// GET\n// 200\ntype GetOrders200 = ResponseCode;\n\n`;
+
+    expect(parse(schema)).toBe(expected);
+  });
 });

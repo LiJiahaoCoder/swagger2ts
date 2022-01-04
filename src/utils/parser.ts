@@ -6,7 +6,11 @@ import {
   generateHttpMethodComment,
   generatePathComment,
 } from './comment';
-import { generateTypeCode, generateDefinitionsCode } from './code';
+import {
+  generateTypeCode,
+  generateBasicTypeCode,
+  generateDefinitionsCode,
+} from './code';
 
 export function parse({ basePath, paths: pathDefinitions, definitions }: Schema) {
   const paths = Object.keys(pathDefinitions);
@@ -33,9 +37,14 @@ export function parse({ basePath, paths: pathDefinitions, definitions }: Schema)
         responseResult += generateHttpCodeComment(httpCode as HttpCode);
 
         const {
-          schema: { type },
+          schema: { $ref, type },
         } = responses[httpCode as HttpCode]!;
-        responseResult += generateTypeCode(
+        const refType = $ref ? $ref.split('/')[$ref.split('/').length - 1] : undefined;
+        responseResult += refType ? generateTypeCode(
+          operationId,
+          refType,
+          httpCode as HttpCode
+        ) : generateBasicTypeCode(
           operationId,
           type,
           httpCode as HttpCode
