@@ -27,8 +27,11 @@ export function generateDefinitionsCode(definitions?: Definitions) {
 
   let result = DEFINITIONS_COMMENT;
   for (const interfaceName in definitions) {
-    const { type, properties } = definitions[interfaceName];
-    if (!properties) {
+    const { $ref, type, properties } = definitions[interfaceName];
+
+    if ($ref) {
+      result += generateTypeCode(interfaceName, getRefName($ref));
+    } else if (!properties) {
       result += generateBasicTypeCode(interfaceName, type);
     } else {
       result += generateInterfaceCode(interfaceName, properties);
@@ -49,4 +52,10 @@ function generateInterfaceCode(name: string, properties: Properties) {
   result += '}\n\n';
 
   return result;
+}
+
+export function getRefName ($ref: string) {
+  const splitted = $ref.split('/');
+
+  return splitted[splitted.length - 1];
 }

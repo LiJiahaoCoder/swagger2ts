@@ -7,6 +7,7 @@ import {
   generatePathComment,
 } from './comment';
 import {
+  getRefName,
   generateTypeCode,
   generateBasicTypeCode,
   generateDefinitionsCode,
@@ -39,7 +40,7 @@ export function parse({ basePath, paths: pathDefinitions, definitions }: Schema)
         const {
           schema: { $ref, type },
         } = responses[httpCode as HttpCode]!;
-        const refType = $ref ? $ref.split('/')[$ref.split('/').length - 1] : undefined;
+        const refType = $ref ? getRefName($ref) : undefined;
         responseResult += refType ? generateTypeCode(
           operationId,
           refType,
