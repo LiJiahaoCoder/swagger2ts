@@ -25,6 +25,7 @@ const TransformButton = ({
       className="btn btn-secondary"
       disabled={loading || disabled}
       onClick={onClick}
+      title="Transform"
     >
       {loading ? (
         <span
@@ -94,6 +95,7 @@ const PageContent = ({
           onClick={handleTransform}
         />
         <Editor
+          showDownload
           type="typescript"
           title={<EditorTitle title="TypeScript Types" lang="typescript" />}
           value={ts}

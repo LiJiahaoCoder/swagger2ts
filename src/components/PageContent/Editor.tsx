@@ -11,6 +11,7 @@ interface Props {
   type: 'json' | 'typescript';
   value: string;
   title?: ReactNode;
+  showDownload?: boolean;
 }
 
 const EDITOR_PROPS: IAceEditorProps = {
@@ -29,13 +30,18 @@ const formatters: Record<'json' | 'typescript', (content: string) => string> = {
   },
 };
 
-const Editor = ({ type, value, title }: Props) => {
+const Editor = ({ type, value, title, showDownload }: Props) => {
   const [formattedValue, setFormattedValue] = useState('');
 
   const handleCopy = () => {
     if (!formattedValue) return;
 
     void copy(formattedValue);
+  };
+
+  const getContentBlob = () => {
+    const blob = new Blob([formattedValue]);
+    return URL.createObjectURL(blob);
   };
 
   useEffect(() => {
@@ -46,9 +52,16 @@ const Editor = ({ type, value, title }: Props) => {
     <div>
       <div className="d-flex justify-content-between align-items-center">
         <h3 className="display-6 fs-3">{title}</h3>
-        <a href="void: 0" onClick={handleCopy}>
-          <i className="far fa-copy fs-5 text-secondary" />
-        </a>
+        <div>
+          {
+            showDownload && <a className="pe-3" href={getContentBlob()} download="type.ts">
+              <i className="fas fa-download text-secondary" title="Download TypeScript file⏬" />
+            </a>
+          }
+          <a href="void: 0" onClick={handleCopy}>
+            <i className="far fa-copy fs-5 text-secondary" title="Copy content📖" />
+          </a>
+        </div>
       </div>
       <AceEditor
         {...EDITOR_PROPS}
