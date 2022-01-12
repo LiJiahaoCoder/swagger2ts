@@ -1,4 +1,4 @@
-import { Schema } from '@/typings/schema';
+import { Schema, Responses } from '@/typings/schema';
 import { HttpCode, HttpMethod } from '@/constants/common';
 import {
   RESPONSE_COMMENT,
@@ -35,24 +35,36 @@ export function parse({ basePath, paths: pathDefinitions, definitions }: Schema)
 
       const { responses, operationId } = methodDefinition;
       for (const httpCode in responses) {
-        responseResult += generateHttpCodeComment(httpCode as HttpCode);
-
-        const {
-          schema: { $ref, type },
-        } = responses[httpCode as HttpCode]!;
-        const refType = $ref ? getRefName($ref) : undefined;
-        responseResult += refType ? generateTypeCode(
+        responseResult = generateResponseType(
+          responseResult,
+          httpCode as HttpCode,
           operationId,
-          refType,
-          httpCode as HttpCode
-        ) : generateBasicTypeCode(
-          operationId,
-          type,
-          httpCode as HttpCode
+          responses,
         );
       }
     }
   }
 
   return responseResult + requestResult;
+}
+
+function generateResponseType(result: string, httpCode: HttpCode, operationId: string, responses: Responses) {
+  let _result = result;
+  _result += generateHttpCodeComment(httpCode);
+
+  const {
+    schema: { $ref, type },
+  } = responses[httpCode]!;
+  const refType = $ref ? getRefName($ref) : $ref;
+  _result += refType ? generateTypeCode(
+    operationId,
+    refType,
+    httpCode
+  ) : generateBasicTypeCode(
+    operationId,
+    type,
+    httpCode
+  );
+
+  return _result;
 }

@@ -54,7 +54,7 @@ type Path = {
   };
 };
 
-type Responses = {
+export type Responses = {
   [httpCode in HttpCode]?: Response;
 };
 

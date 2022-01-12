@@ -19,7 +19,32 @@ export function generateBasicTypeCode(
   type?: SchemaDataType,
   code?: HttpCode
 ) {
-  return generateTypeCode(operationId, type ? SCHEMA_DATA_MAP[type] : '', code);
+  return generateTypeCode(
+    operationId,
+    type ? SCHEMA_DATA_MAP[type] : type,
+    code,
+  );
+}
+
+function generateInterfaceCode(name: string, properties: Properties) {
+  let result = `interface ${name} {\n`;
+
+  for (const propertyName in properties) {
+    const { type } = properties[propertyName];
+
+    if (!type) continue;
+
+    result += `  ${propertyName}: ${SCHEMA_DATA_MAP[type]};\n`
+  }
+  result += '}\n\n';
+
+  return result;
+}
+
+export function getRefName ($ref: string) {
+  const splitted = $ref.split('/');
+
+  return splitted[splitted.length - 1];
 }
 
 export function generateDefinitionsCode(definitions?: Definitions) {
@@ -39,23 +64,4 @@ export function generateDefinitionsCode(definitions?: Definitions) {
   }
 
   return result;
-}
-
-function generateInterfaceCode(name: string, properties: Properties) {
-  let result = `interface ${name} {\n`;
-
-  for (const propertyName in properties) {
-    const { type } = properties[propertyName];
-    if (!type) continue;
-    result += `  ${propertyName}: ${SCHEMA_DATA_MAP[type]};\n`
-  }
-  result += '}\n\n';
-
-  return result;
-}
-
-export function getRefName ($ref: string) {
-  const splitted = $ref.split('/');
-
-  return splitted[splitted.length - 1];
 }

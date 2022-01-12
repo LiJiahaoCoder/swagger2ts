@@ -4,8 +4,8 @@ export function formatJSON(json: string) {
   if (!json) return '';
 
   let result = '',
-    inString = false,
-    indentLevel = 0;
+      inString = false,
+      indentLevel = 0;
 
   for (let i = 0; i < json.length; ++i) {
     const current = json.charAt(i);
