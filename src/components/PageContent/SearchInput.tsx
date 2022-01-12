@@ -7,7 +7,7 @@ interface Props {
 
 const SearchInput = ({ value, loading, onChange, onFetch }: Props) => {
   return (
-    <>
+    <div className="shadow input-group mt-5 mb-4 w-100">
       <input
         className="form-control"
         type="text"
@@ -35,7 +35,7 @@ const SearchInput = ({ value, loading, onChange, onFetch }: Props) => {
         )}
         Fetch
       </button>
-    </>
+    </div>
   );
 };
 

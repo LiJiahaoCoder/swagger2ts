@@ -1,5 +1,5 @@
 import { useState, useEffect, ReactNode } from 'react';
-import AceEditor from 'react-ace';
+import AceEditor, { IAceEditorProps } from 'react-ace';
 import { formatJSON } from '@/utils/formatter';
 import { copy } from '@/utils/clipboard';
 
@@ -12,6 +12,15 @@ interface Props {
   value: string;
   title?: ReactNode;
 }
+
+const EDITOR_PROPS: IAceEditorProps = {
+  readOnly: true,
+  width: '550px',
+  height: '600px',
+  className: 'shadow border rounded-1',
+  theme: 'xcode',
+  editorProps: { $blockScrolling: true },
+};
 
 const formatters: Record<'json' | 'typescript', (content: string) => string> = {
   json: formatJSON,
@@ -42,15 +51,10 @@ const Editor = ({ type, value, title }: Props) => {
         </a>
       </div>
       <AceEditor
-        readOnly
-        width="550px"
-        height="600px"
-        className="shadow border rounded-1"
+        {...EDITOR_PROPS}
         mode={type}
-        theme="xcode"
         name={type}
         value={formattedValue}
-        editorProps={{ $blockScrolling: true }}
       />
     </div>
   );
