@@ -5,3 +5,21 @@
   <img alt="coverage badge" src="https://img.shields.io/badge/coverage-100%25-green" />
   <img alt="license badge" src="https://img.shields.io/github/license/LiJiahaoCoder/swagger2ts" />
 </section>
+
+This project can transform *Swagger Schema* to *TypeScript type or interface*😉
+
+## How to use?
+
+Open [project website](https://lijiahaocoder.github.io/swagger2ts/):
+
+![website](https://github.com/LiJiahaoCoder/swagger2ts/blob/main/images/website.png)
+
+Then copy *Swagger Schema Request URL* to input:
+
+![swagger-editor](https://github.com/LiJiahaoCoder/swagger2ts/blob/main/images/swagger-editor.png)
+
+Finally, you can get *TypeScript* code:
+
+![result](https://github.com/LiJiahaoCoder/swagger2ts/blob/main/images/result.png)
+
+You can also download or copy the transformed result by clicking proper icon button.
