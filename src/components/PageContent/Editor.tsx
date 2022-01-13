@@ -1,7 +1,8 @@
-import { useState, useEffect, ReactNode } from 'react';
+import { useState, useEffect } from 'react';
 import AceEditor, { IAceEditorProps } from 'react-ace';
 import { formatJSON } from '@/utils/formatter';
 import { copy } from '@/utils/clipboard';
+import EditorTitle from './EditorTitle';
 
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/mode-typescript';
@@ -10,7 +11,7 @@ import 'ace-builds/src-noconflict/theme-xcode';
 interface Props {
   type: 'json' | 'typescript';
   value: string;
-  title?: ReactNode;
+  title: string;
   showDownload?: boolean;
 }
 
@@ -51,7 +52,9 @@ const Editor = ({ type, value, title, showDownload }: Props) => {
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center">
-        <h3 className="display-6 fs-3">{title}</h3>
+        <h3 className="display-6 fs-3">
+          <EditorTitle title={title} lang={type} />
+        </h3>
         <div>
           {
             showDownload && <a className="pe-3" href={getContentBlob()} download="type.ts">

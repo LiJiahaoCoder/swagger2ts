@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Schema } from '@/typings/schema';
 import { parse } from '@/utils/parser';
 import SearchInput from './SearchInput';
-import EditorTitle from './EditorTitle';
 import Editor from './Editor';
 
 interface TransformButtonProps {
@@ -86,7 +85,7 @@ const PageContent = ({
       <section className="d-flex justify-content-between">
         <Editor
           type="json"
-          title={<EditorTitle title="Swagger Schema" lang="json" />}
+          title="Swagger Schema"
           value={schemaString}
         />
         <TransformButton
@@ -97,7 +96,7 @@ const PageContent = ({
         <Editor
           showDownload
           type="typescript"
-          title={<EditorTitle title="TypeScript Types" lang="typescript" />}
+          title="TypeScript Types"
           value={ts}
         />
       </section>
