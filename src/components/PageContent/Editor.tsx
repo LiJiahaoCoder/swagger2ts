@@ -31,18 +31,22 @@ const formatters: Record<'json' | 'typescript', (content: string) => string> = {
   },
 };
 
+const getContentBlob = (formattedValue: string) => {
+  const blob = new Blob([formattedValue]);
+  return URL.createObjectURL(blob);
+};
+
 const Editor = ({ type, value, title, showDownload }: Props) => {
   const [formattedValue, setFormattedValue] = useState('');
+  const actionDisabled = !Boolean(formattedValue);
+  const actionCursor = {
+    cursor: actionDisabled ? 'not-allowed' : 'pointer',
+  };
 
   const handleCopy = () => {
     if (!formattedValue) return;
 
     void copy(formattedValue);
-  };
-
-  const getContentBlob = () => {
-    const blob = new Blob([formattedValue]);
-    return URL.createObjectURL(blob);
   };
 
   useEffect(() => {
@@ -59,11 +63,29 @@ const Editor = ({ type, value, title, showDownload }: Props) => {
         </h3>
         <div>
           {
-            showDownload && <a className="pe-3" href={getContentBlob()} download="type.ts">
-              <i className="fas fa-download text-secondary" title="Download TypeScript file⏬" />
-            </a>
+            showDownload && (
+              <a
+                className="pe-3"
+                href={
+                  actionDisabled ?
+                    'void: 0' :
+                    getContentBlob(formattedValue)
+                }
+                download="type.ts"
+                style={actionCursor}
+              >
+                <i
+                  className="fas fa-download text-secondary"
+                  title="Download TypeScript file⏬"
+                />
+              </a>
+            )
           }
-          <a href="void: 0" onClick={handleCopy}>
+          <a
+            href="void: 0"
+            style={actionCursor}
+            onClick={actionDisabled ? undefined : handleCopy}
+          >
             <i className="far fa-copy fs-5 text-secondary" title="Copy content📖" />
           </a>
         </div>
