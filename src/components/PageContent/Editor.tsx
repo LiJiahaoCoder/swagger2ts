@@ -17,7 +17,7 @@ interface Props {
 
 const EDITOR_PROPS: IAceEditorProps = {
   readOnly: true,
-  width: '550px',
+  width: '100%',
   height: '600px',
   className: 'shadow border rounded-1',
   theme: 'xcode',
@@ -50,7 +50,9 @@ const Editor = ({ type, value, title, showDownload }: Props) => {
   }, [value]);
 
   return (
-    <div>
+    <div
+      style={{ flex: '1' }}
+    >
       <div className="d-flex justify-content-between align-items-center">
         <h3 className="display-6 fs-3">
           <EditorTitle title={title} lang={type} />

@@ -16,8 +16,7 @@ const TransformButton = ({
   onClick,
 }: TransformButtonProps) => (
   <div
-    className="d-flex align-items-center
-"
+    className="d-flex align-items-center justify-content-center m-3"
   >
     <button
       type="button"
@@ -33,7 +32,10 @@ const TransformButton = ({
           aria-hidden="true"
         />
       ) : (
-        <i className="fas fa-arrow-right mt-1" />
+        <>
+          <i className="fas fa-arrow-right d-none d-xl-inline-block mt-1" />
+          <i className="fas fa-arrow-down d-xl-none mt-1" />
+        </>
       )}
     </button>
   </div>
@@ -82,7 +84,9 @@ const PageContent = ({
         onChange={handleInput}
         onFetch={handleFetch}
       />
-      <section className="d-flex justify-content-between">
+      <section
+        className="d-flex flex-column flex-xl-row justify-content-between mb-4"
+      >
         <Editor
           type="json"
           title="Swagger Schema"
