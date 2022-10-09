@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import PageHeader from '@/components/PageHeader';
 import PageContent from '@/components/PageContent';
+import PageFooter from '@/components/PageFooter';
 import ErrorAlert from '@/components/ErrorAlert';
 import useSchema from '@/hooks/useSchema';
 
@@ -28,6 +29,7 @@ const App = () => {
         setUrl={setUrl}
         fetch={handleFetch}
       />
+      <PageFooter />
       <ErrorAlert
         errorMessage={errorMessage}
         setErrorMessage={setErrorMessage}
