@@ -1,9 +1,9 @@
 import { useState, useContext } from 'react';
 import { parse } from '@/utils/parser';
 import ctx from '@/store';
-import SearchInput from './SearchInput';
-import Editor from './Editor';
-import TransformButton from './TransformButton';
+import SearchInput from '@/components/SearchInput';
+import Editor from '@/components/Editor';
+import TransformButton from '@/components/TransformButton';
 
 interface Props {
   fetch: () => void;

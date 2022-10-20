@@ -9,7 +9,7 @@ import { debounce } from 'lodash';
 import { formatJSON } from '@/utils/formatter';
 import { copy } from '@/utils/clipboard';
 import ctx from '@/store';
-import EditorTitle from './EditorTitle';
+import Title from './Title';
 
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/mode-typescript';
@@ -77,7 +77,7 @@ const Editor = ({
     >
       <div className="d-flex justify-content-between align-items-center">
         <h3 className="display-6 fs-3">
-          <EditorTitle title={title} lang={type} />
+          <Title title={title} lang={type} />
         </h3>
         <div>
           {

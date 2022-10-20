@@ -3,7 +3,7 @@ interface Props {
   lang: string;
 }
 
-const EditorTitle = ({ title, lang }: Props) => {
+const Title = ({ title, lang }: Props) => {
   return (
     <>
       {title}
@@ -12,4 +12,4 @@ const EditorTitle = ({ title, lang }: Props) => {
   );
 };
 
-export default EditorTitle;
+export default Title;

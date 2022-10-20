@@ -7,7 +7,7 @@ interface Props {
 
 const SearchInput = ({ onFetch }: Props) => {
   const { url, loading, setUrl } = useContext(ctx);
-  
+
   return (
     <div className="shadow input-group mt-5 mb-4 w-100">
       <input
