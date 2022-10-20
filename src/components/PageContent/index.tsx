@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { parse } from '@/utils/parser';
 import ctx from '@/store';
 import SearchInput from './SearchInput';
@@ -22,10 +22,6 @@ const PageContent = ({ fetch }: Props) => {
     setTs(parse(schema));
     setTransforming(false);
   };
-
-  useEffect(() => {
-    console.log(schema);
-  }, [schema]);
 
   return (
     <main className="container">

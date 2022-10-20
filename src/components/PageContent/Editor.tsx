@@ -5,6 +5,7 @@ import {
   useContext,
 } from 'react';
 import AceEditor, { IAceEditorProps } from 'react-ace';
+import { debounce } from 'lodash';
 import { formatJSON } from '@/utils/formatter';
 import { copy } from '@/utils/clipboard';
 import ctx from '@/store';
@@ -62,9 +63,9 @@ const Editor = ({
     void copy(formattedValue);
   };
 
-  const handleChange = useCallback((value: string) => {
-    setSchema?.(JSON.parse(value));
-  }, []);
+  const handleChange = useCallback(debounce((value: string) => {
+    setSchema?.(value ? JSON.parse(value) : null);
+  }, 300), []);
 
   useEffect(() => {
     setFormattedValue(formatters[type](value));
