@@ -4,15 +4,18 @@ import PageContent from '@/components/PageContent';
 import PageFooter from '@/components/PageFooter';
 import ErrorAlert from '@/components/ErrorAlert';
 import useSchema from '@/hooks/useSchema';
+import ctx from '@/store';
 
 const App = () => {
   const [url, setUrl] = useState('');
   const {
     loading,
-    errorMessage,
     result,
-    request,
+    errorMessage,
+    setResult,
+    setLoading,
     setErrorMessage,
+    request,
   } = useSchema();
 
   const handleFetch = () => {
@@ -20,21 +23,24 @@ const App = () => {
   };
 
   return (
-    <>
+    <ctx.Provider
+      value={{
+        loading,
+        url,
+        schema: result,
+        setLoading,
+        setUrl,
+        setSchema: setResult,
+      }}
+    >
       <PageHeader />
-      <PageContent
-        url={url}
-        loading={loading}
-        schema={result}
-        setUrl={setUrl}
-        fetch={handleFetch}
-      />
+      <PageContent fetch={handleFetch} />
       <PageFooter />
       <ErrorAlert
         errorMessage={errorMessage}
         setErrorMessage={setErrorMessage}
       />
-    </>
+    </ctx.Provider>
   );
 };
 

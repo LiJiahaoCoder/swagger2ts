@@ -1,11 +1,13 @@
+import { useContext } from 'react';
+import ctx from '@/store';
+
 interface Props {
-  value: string;
-  loading: boolean;
-  onChange: (value: string) => void;
   onFetch: () => void;
 }
 
-const SearchInput = ({ value, loading, onChange, onFetch }: Props) => {
+const SearchInput = ({ onFetch }: Props) => {
+  const { url, loading, setUrl } = useContext(ctx);
+  
   return (
     <div className="shadow input-group mt-5 mb-4 w-100">
       <input
@@ -14,17 +16,17 @@ const SearchInput = ({ value, loading, onChange, onFetch }: Props) => {
         placeholder="Please input request URL of swagger.json"
         aria-label="Please input request URL of swagger.json"
         aria-describedby="input-search"
-        value={value}
+        value={url}
         disabled={loading}
         onChange={(e) => {
-          onChange(e.target.value);
+          setUrl?.(e.target.value);
         }}
       />
       <button
         className="btn btn-outline-secondary"
         type="button"
         id="input-search"
-        disabled={loading || !value.trim()}
+        disabled={loading || !url.trim()}
         onClick={onFetch}
       >
         {loading && (

@@ -1,7 +1,13 @@
-import { useState, useEffect } from 'react';
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useContext,
+} from 'react';
 import AceEditor, { IAceEditorProps } from 'react-ace';
 import { formatJSON } from '@/utils/formatter';
 import { copy } from '@/utils/clipboard';
+import ctx from '@/store';
 import EditorTitle from './EditorTitle';
 
 import 'ace-builds/src-noconflict/mode-json';
@@ -12,11 +18,11 @@ interface Props {
   type: 'json' | 'typescript';
   value: string;
   title: string;
+  readOnly?: boolean;
   showDownload?: boolean;
 }
 
 const EDITOR_PROPS: IAceEditorProps = {
-  readOnly: true,
   width: '100%',
   height: '600px',
   className: 'shadow border rounded-1',
@@ -36,8 +42,15 @@ const getContentBlob = (formattedValue: string) => {
   return URL.createObjectURL(blob);
 };
 
-const Editor = ({ type, value, title, showDownload }: Props) => {
+const Editor = ({
+  type,
+  value,
+  title,
+  readOnly = true,
+  showDownload,
+}: Props) => {
   const [formattedValue, setFormattedValue] = useState('');
+  const { setSchema } = useContext(ctx);
   const actionDisabled = !Boolean(formattedValue);
   const actionCursor = {
     cursor: actionDisabled ? 'not-allowed' : 'pointer',
@@ -48,6 +61,10 @@ const Editor = ({ type, value, title, showDownload }: Props) => {
 
     void copy(formattedValue);
   };
+
+  const handleChange = useCallback((value: string) => {
+    setSchema?.(JSON.parse(value));
+  }, []);
 
   useEffect(() => {
     setFormattedValue(formatters[type](value));
@@ -92,9 +109,11 @@ const Editor = ({ type, value, title, showDownload }: Props) => {
       </div>
       <AceEditor
         {...EDITOR_PROPS}
+        readOnly={readOnly}
         mode={type}
         name={type}
         value={formattedValue}
+        onChange={handleChange}
       />
     </div>
   );
